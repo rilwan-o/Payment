@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Payment.Domain.Data;
+using Payment.Domain.Interfaces;
+using Payment.Domain.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,7 @@ namespace Payment.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PaymentDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Payment.API")));
+            services.AddScoped<IGatewayFactory, GatewayFactory>();
 
             services.AddControllers()
                   .ConfigureApiBehaviorOptions(options =>
@@ -37,6 +40,7 @@ namespace Payment.API
                       options.SuppressModelStateInvalidFilter = true;
 
                   });
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

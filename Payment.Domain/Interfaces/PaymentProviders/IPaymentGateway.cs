@@ -1,5 +1,6 @@
 ﻿using Payment.Domain.Data;
 using Payment.Domain.Dtos;
+using Payment.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Payment.Domain.Interfaces.PaymentProviders
 {
     public interface IPaymentGateway
     {
-        Response ProcessPayment(PaymentDetailRequestDto paymentDetailRequestDto);
+        void ProcessPayment(PaymentDetail paymentDetail);
     }
 }
